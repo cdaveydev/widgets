@@ -6,14 +6,12 @@ export type WidgetSize = 'small' | 'medium' | 'large' | 'x-large';
 interface WidgetContainerProps {
   children: ReactNode;
   initialSize?: WidgetSize;
-  title?: string;
   id: string;
 }
 
 const WidgetContainer = ({ 
   children, 
   initialSize = 'small',
-  title,
   id
 }: WidgetContainerProps) => {
   // Try to get saved size from localStorage first
@@ -41,7 +39,7 @@ const WidgetContainer = ({
   
   // Show selector after a short delay when hovering to prevent accidental triggers
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setTimeout>;
     
     if (isHovering) {
       timer = setTimeout(() => {

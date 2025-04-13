@@ -1,4 +1,3 @@
-import React from 'react';
 import { WidgetSize } from './WidgetContainer';
 
 interface WidgetSizeSelectorProps {
