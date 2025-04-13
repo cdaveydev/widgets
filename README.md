@@ -1,57 +1,76 @@
-# Widgets Dashboard
+# Dashboard Widgets
 
-A responsive dashboard built with React and TypeScript featuring a collection of interactive widgets. Each widget visualizes different types of data with modern, clean UI elements inspired by Apple's design language.
+An Apple-style dashboard with interactive widgets for displaying various metrics and information.
+
+![Dashboard Preview](dashboard-preview.png)
 
 ## Features
 
-- Interactive widgets for various data types (Battery, Temperature, Humidity, Cell Signal, etc.)
-- Customizable widget sizes (Small, Medium, Large)
-- Responsive layout that adapts to different screen sizes
-- Persistent user preferences with localStorage
-- Animated transitions and interactive elements
-- Simulated real-time data updates
+- **Battery Level Widget**: Displays battery status with charging indicator
+- **Temperature Widget**: Shows temperature with thermometer visualization
+- **Humidity Widget**: Displays humidity level with water drop indicator
+- **Garbage Level Widget**: Visualizes trash level with a trash can graphic
+- **Speed Widget**: Speedometer display for velocity indication
+- **Heart Rate Widget**: Shows BPM with animated heart
+- **Oxygen Level Widget**: SpO₂ measurement with O₂ molecule visualization
+- **Body Heat Map Widget**: Interactive human body with temperature zones
 
-## Widgets
+## Technologies Used
 
-- **Battery Widget**: Displays battery level with charging status
-- **Temperature Widget**: Shows temperature with visual thermometer
-- **Humidity Widget**: Displays humidity with a circular progress indicator
-- **Cell Signal Widget**: Shows mobile carrier and signal strength
-- **Garbage Widget**: Visualizes trash level
-- **Speed Widget**: Dynamic speed indicator
-- **Heart Rate Widget**: Displays heart rate with animation
-- **Oxygen Level Widget**: Shows blood oxygen levels
-- **Heat Map Widget**: Visual body heat map
+- React 18
+- TypeScript
+- Vite
+- CSS3 with custom properties
+- SVG animations
 
 ## Getting Started
 
-1. Clone the repository:
+### Prerequisites
+
+- Node.js (v14+)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
    ```bash
-   git clone https://github.com/your-username/widgets-dashboard.git
-   cd widgets-dashboard
+   git clone https://github.com/yourusername/dashboard-widgets.git
+   cd dashboard-widgets
    ```
 
-2. Install dependencies:
+2. Install dependencies
    ```bash
    npm install
+   # or
+   yarn
    ```
 
-3. Run the development server:
+3. Start the development server
    ```bash
    npm run dev
+   # or
+   yarn dev
    ```
 
-4. Build for production:
-   ```bash
-   npm run build
-   ```
+4. Open your browser and navigate to `http://localhost:5173`
 
-## Technologies
+## Customization
 
-- React
-- TypeScript
-- Vite
-- CSS (with custom properties)
+All widgets use simulated data but can be easily modified to accept real data sources:
+
+- Modify the data fetching in each widget's useEffect hook
+- Adjust the min/max values for accurate representation
+- Change the update intervals to match your data freshness requirements
+
+## Deployment
+
+This project is ready to be deployed on Vercel:
+
+```bash
+npm run build
+# or
+yarn build
+```
 
 ## License
 

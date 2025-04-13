@@ -36,7 +36,7 @@
   height: 220px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, grid-column 0.3s ease, grid-row 0.3s ease, height 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, height 0.3s ease, grid-column 0.3s ease, grid-row 0.3s ease;
 }
 
 /* Apple-style widget size classes */
@@ -182,6 +182,76 @@
 
 .small .value-unit {
   margin-top: 0px;
+}
+
+/* Widget size selector */
+.widget-size-selector {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 4px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: fadeIn 0.2s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.size-option {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.size-option:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.size-option.active {
+  background-color: var(--accent-blue);
+}
+
+.size-icon {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 2px;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.size-option.small .size-icon {
+  width: 10px;
+  height: 10px;
+}
+
+.size-option.medium .size-icon {
+  width: 18px;
+  height: 10px;
+}
+
+.size-option.large .size-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.size-option.x-large .size-icon {
+  width: 18px;
+  height: 18px;
 }
 
 /* Media queries for responsive layout */

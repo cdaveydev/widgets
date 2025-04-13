@@ -72,90 +72,93 @@ const CellSignalWidget = ({
   const bars = getSignalBars();
 
   return (
-    <div className="widget-content">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div style={{ 
-            position: 'relative', 
-            width: '120px', 
-            height: '110px', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'space-between'
-          }}>
-            {/* Carrier logo */}
+    <>
+      <div className="widget-title">Cell Signal</div>
+      <div className="widget-content">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ 
-              height: '50px', 
+              position: 'relative', 
+              width: '120px', 
+              height: '110px', 
               display: 'flex', 
+              flexDirection: 'column', 
               alignItems: 'center', 
-              justifyContent: 'center', 
-              marginTop: '5px',
-              padding: '5px'
+              justifyContent: 'space-between'
             }}>
-              <img 
-                src={carrier === 'T-Mobile' ? tmobileSvg : attSvg} 
-                alt={carrier} 
-                style={{ 
-                  maxWidth: '90px',
-                  maxHeight: '40px',
-                  width: 'auto',
-                  height: 'auto',
-                  objectFit: 'contain'
-                }} 
-              />
-            </div>
-            
-            {/* Signal bars */}
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'flex-end', 
-              height: '45px', 
-              justifyContent: 'center',
-              gap: '3px',
-              marginBottom: '5px'
-            }}>
-              {[1, 2, 3, 4, 5].map(bar => (
-                <div
-                  key={bar}
-                  style={{
-                    width: '10px',
-                    height: `${bar * 8}px`,
-                    backgroundColor: bar <= bars ? getSignalColor() : 'rgba(255, 255, 255, 0.2)',
-                    borderRadius: '1px',
-                    transition: 'background-color 0.5s ease, height 0.5s ease'
-                  }}
-                />
-              ))}
-            </div>
-            
-            {/* Roaming indicator */}
-            {isRoaming && (
+              {/* Carrier logo */}
               <div style={{ 
-                position: 'absolute', 
-                top: '5px', 
-                right: '5px', 
-                fontSize: '12px',
-                color: 'var(--accent-orange)',
-                fontWeight: 'bold'
+                height: '50px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                marginTop: '5px',
+                padding: '5px'
               }}>
-                R
+                <img 
+                  src={carrier === 'T-Mobile' ? tmobileSvg : attSvg} 
+                  alt={carrier} 
+                  style={{ 
+                    maxWidth: '90px',
+                    maxHeight: '40px',
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain'
+                  }} 
+                />
               </div>
-            )}
+              
+              {/* Signal bars */}
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'flex-end', 
+                height: '45px', 
+                justifyContent: 'center',
+                gap: '3px',
+                marginBottom: '5px'
+              }}>
+                {[1, 2, 3, 4, 5].map(bar => (
+                  <div
+                    key={bar}
+                    style={{
+                      width: '10px',
+                      height: `${bar * 8}px`,
+                      backgroundColor: bar <= bars ? getSignalColor() : 'rgba(255, 255, 255, 0.2)',
+                      borderRadius: '1px',
+                      transition: 'background-color 0.5s ease, height 0.5s ease'
+                    }}
+                  />
+                ))}
+              </div>
+              
+              {/* Roaming indicator */}
+              {isRoaming && (
+                <div style={{ 
+                  position: 'absolute', 
+                  top: '5px', 
+                  right: '5px', 
+                  fontSize: '12px',
+                  color: 'var(--accent-orange)',
+                  fontWeight: 'bold'
+                }}>
+                  R
+                </div>
+              )}
+            </div>
+            <div className="value-label">
+              {getSignalQuality()}{isRoaming ? ' (Roaming)' : ''}
+            </div>
           </div>
-          <div className="value-label">
-            {getSignalQuality()}{isRoaming ? ' (Roaming)' : ''}
+          
+          <div style={{ textAlign: 'center', marginRight: '20px' }}>
+            <div className="value-text">
+              {Math.round(signalStrength)}
+            </div>
+            <div className="value-unit">dBm</div>
           </div>
-        </div>
-        
-        <div style={{ textAlign: 'center', marginRight: '20px' }}>
-          <div className="value-text">
-            {Math.round(signalStrength)}
-          </div>
-          <div className="value-unit">dBm</div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

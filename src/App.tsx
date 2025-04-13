@@ -13,39 +13,39 @@ import WidgetContainer from './components/WidgetContainer'
 function App() {
   return (
     <div className="dashboard">
-      <WidgetContainer id="battery" title="Battery" initialSize="small">
+      <WidgetContainer initialSize="small" id="battery">
         <BatteryWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="temperature" title="Temperature" initialSize="small">
+      <WidgetContainer initialSize="small" id="temperature">
         <TemperatureWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="humidity" title="Humidity" initialSize="small">
+      <WidgetContainer initialSize="small" id="humidity">
         <HumidityWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="cell-signal" title="Cell Signal" initialSize="small">
+      <WidgetContainer initialSize="small" id="cell-signal">
         <CellSignalWidget />
       </WidgetContainer>
       
-      <WidgetContainer id="garbage" title="Garbage Level" initialSize="medium">
+      <WidgetContainer initialSize="medium" id="garbage">
         <GarbageWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="speed" title="Speed" initialSize="medium">
+      <WidgetContainer initialSize="medium" id="speed">
         <SpeedWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="heart-rate" title="Heart Rate" initialSize="small">
+      <WidgetContainer initialSize="small" id="heart-rate">
         <HeartRateWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="oxygen" title="Oxygen Level" initialSize="small">
+      <WidgetContainer initialSize="small" id="oxygen">
         <OxygenLevelWidget />
       </WidgetContainer>
 
-      <WidgetContainer id="heat-map" title="Body Heat Map" initialSize="large">
+      <WidgetContainer initialSize="large" id="heat-map">
         <HeatMapWidget />
       </WidgetContainer>
     </div>

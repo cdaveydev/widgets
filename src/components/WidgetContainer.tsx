@@ -1,45 +1,78 @@
-import { useState, useEffect, ReactNode } from 'react';
-import WidgetSizeSelector, { WidgetSize } from './WidgetSizeSelector';
+import { ReactNode, useState, useEffect } from 'react';
+import WidgetSizeSelector from './WidgetSizeSelector';
+
+export type WidgetSize = 'small' | 'medium' | 'large' | 'x-large';
 
 interface WidgetContainerProps {
-  initialSize?: WidgetSize;
   children: ReactNode;
+  initialSize?: WidgetSize;
   title?: string;
   id: string;
 }
 
 const WidgetContainer = ({ 
-  initialSize = 'small', 
   children, 
+  initialSize = 'small',
   title,
   id
 }: WidgetContainerProps) => {
-  const [size, setSize] = useState<WidgetSize>(() => {
-    // Try to load saved size preference from localStorage
-    const savedSize = localStorage.getItem(`widget-size-${id}`);
-    if (savedSize === 'small' || savedSize === 'medium' || savedSize === 'large') {
-      return savedSize;
+  // Try to get saved size from localStorage first
+  const getSavedSize = (): WidgetSize => {
+    try {
+      const saved = localStorage.getItem(`widget_size_${id}`);
+      return saved as WidgetSize || initialSize;
+    } catch (e) {
+      return initialSize;
     }
-    return initialSize;
-  });
+  };
 
-  // Save size preference to localStorage when it changes
+  const [size, setSize] = useState<WidgetSize>(getSavedSize());
+  const [isHovering, setIsHovering] = useState(false);
+  const [showSelector, setShowSelector] = useState(false);
+  
+  // Save size to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem(`widget-size-${id}`, size);
+    try {
+      localStorage.setItem(`widget_size_${id}`, size);
+    } catch (e) {
+      console.warn('Failed to save widget size to localStorage', e);
+    }
   }, [size, id]);
+  
+  // Show selector after a short delay when hovering to prevent accidental triggers
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    if (isHovering) {
+      timer = setTimeout(() => {
+        setShowSelector(true);
+      }, 300);
+    } else {
+      setShowSelector(false);
+    }
+    
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isHovering]);
 
   const handleSizeChange = (newSize: WidgetSize) => {
     setSize(newSize);
   };
-
+  
   return (
-    <div className={`widget ${size}`}>
-      {title && <div className="widget-title">{title}</div>}
+    <div 
+      className={`widget ${size}`}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {showSelector && (
+        <WidgetSizeSelector 
+          currentSize={size} 
+          onSizeChange={handleSizeChange}
+        />
+      )}
       {children}
-      <WidgetSizeSelector 
-        currentSize={size} 
-        onChange={handleSizeChange} 
-      />
     </div>
   );
 };

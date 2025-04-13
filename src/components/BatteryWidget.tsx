@@ -38,62 +38,65 @@ const BatteryWidget = ({ initialLevel = 75 }: BatteryWidgetProps) => {
   };
 
   return (
-    <div className="widget-content">
-      <div>
+    <>
+      <div className="widget-title">Battery</div>
+      <div className="widget-content">
         <div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ 
-                width: '60px', 
-                height: '80px', 
-                border: '3px solid white', 
-                borderRadius: '12px', 
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  width: '100%',
-                  height: `${batteryLevel}%`,
-                  backgroundColor: getBatteryColor(),
-                  transition: 'height 1s ease, background-color 1s ease'
-                }} />
-                {charging && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div style={{ 
+                  width: '60px', 
+                  height: '80px', 
+                  border: '3px solid white', 
+                  borderRadius: '12px', 
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
                   <div style={{
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    fontSize: '20px',
-                    zIndex: 2,
-                    color: batteryLevel > 50 ? 'black' : 'white'
-                  }}>
-                    ⚡
-                  </div>
-                )}
+                    bottom: 0,
+                    width: '100%',
+                    height: `${batteryLevel}%`,
+                    backgroundColor: getBatteryColor(),
+                    transition: 'height 1s ease, background-color 1s ease'
+                  }} />
+                  {charging && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      fontSize: '20px',
+                      zIndex: 2,
+                      color: batteryLevel > 50 ? 'black' : 'white'
+                    }}>
+                      ⚡
+                    </div>
+                  )}
+                </div>
+                <div style={{ 
+                  height: '10px', 
+                  width: '5px', 
+                  backgroundColor: 'white', 
+                  marginLeft: '-1px',
+                  borderRadius: '0 3px 3px 0'
+                }} />
               </div>
-              <div style={{ 
-                height: '10px', 
-                width: '5px', 
-                backgroundColor: 'white', 
-                marginLeft: '-1px',
-                borderRadius: '0 3px 3px 0'
-              }} />
+            </div>
+            <div className="value-label">
+              {charging ? 'Charging' : 'On Battery'}
             </div>
           </div>
-          <div className="value-label">
-            {charging ? 'Charging' : 'On Battery'}
-          </div>
-        </div>
-        
-        <div style={{ textAlign: 'center', marginRight: '20px' }}>
-          <div className="value-text">
-            {batteryLevel}%
+          
+          <div style={{ textAlign: 'center', marginRight: '20px' }}>
+            <div className="value-text">
+              {batteryLevel}%
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
