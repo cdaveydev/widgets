@@ -1,7 +1,6 @@
 import { ReactNode, useState, useEffect } from 'react';
 import WidgetSizeSelector from './WidgetSizeSelector';
-
-export type WidgetSize = 'small' | 'medium' | 'large' | 'x-large';
+import { WidgetSize } from './WidgetTypes';
 
 interface WidgetContainerProps {
   children: ReactNode;

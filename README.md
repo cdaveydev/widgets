@@ -1,6 +1,6 @@
 # Dashboard Widgets
 
-An Apple-style dashboard with interactive widgets for displaying various metrics and information.
+An Apple-style dashboard with interactive widgets for displaying various metrics and information. Each widget can be resized by the user to customize their dashboard experience.
 
 ![Dashboard Preview](dashboard-preview.png)
 
@@ -9,11 +9,13 @@ An Apple-style dashboard with interactive widgets for displaying various metrics
 - **Battery Level Widget**: Displays battery status with charging indicator
 - **Temperature Widget**: Shows temperature with thermometer visualization
 - **Humidity Widget**: Displays humidity level with water drop indicator
+- **Cell Signal Widget**: Shows carrier logo, signal strength and roaming status
 - **Garbage Level Widget**: Visualizes trash level with a trash can graphic
 - **Speed Widget**: Speedometer display for velocity indication
 - **Heart Rate Widget**: Shows BPM with animated heart
 - **Oxygen Level Widget**: SpO₂ measurement with O₂ molecule visualization
 - **Body Heat Map Widget**: Interactive human body with temperature zones
+- **Resizable Widgets**: All widgets can be dynamically resized (small, medium, large, x-large)
 
 ## Technologies Used
 
@@ -22,12 +24,13 @@ An Apple-style dashboard with interactive widgets for displaying various metrics
 - Vite
 - CSS3 with custom properties
 - SVG animations
+- LocalStorage for user preferences
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14+)
+- Node.js (v18+)
 - npm or yarn
 
 ### Installation
@@ -56,6 +59,20 @@ An Apple-style dashboard with interactive widgets for displaying various metrics
 
 ## Customization
 
+### Widget Resizing
+
+To change a widget's size:
+1. Hover over any widget to reveal the size controls in the top-right corner
+2. Select one of the four available sizes:
+   - Small (1x1 grid unit)
+   - Medium (2x1 grid units)
+   - Large (2x2 grid units)
+   - X-Large (4x2 grid units)
+
+The dashboard layout will automatically adjust, and your size preferences will be saved between sessions.
+
+### Data Customization
+
 All widgets use simulated data but can be easily modified to accept real data sources:
 
 - Modify the data fetching in each widget's useEffect hook
@@ -68,8 +85,8 @@ This project is ready to be deployed on Vercel:
 
 ```bash
 npm run build
-# or
-yarn build
+# then deploy with Vercel CLI
+vercel
 ```
 
 ## License

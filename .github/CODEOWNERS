@@ -1,0 +1,9 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence.
+* @yourusername
+
+# CSS files
+*.css @yourusername
+
+# TypeScript component files
+src/components/*.tsx @yourusername 

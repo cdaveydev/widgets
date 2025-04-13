@@ -1,4 +1,4 @@
-import { WidgetSize } from './WidgetContainer';
+import { WidgetSize } from './WidgetTypes';
 
 interface WidgetSizeSelectorProps {
   currentSize: WidgetSize;
