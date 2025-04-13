@@ -9,12 +9,14 @@
   --accent-orange: #ff9500;
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.6);
+  --cell-width: 155px;
+  --gap-size: 24px;
 }
 
 .dashboard {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--cell-width), 1fr));
+  gap: var(--gap-size);
   padding: 24px;
   background-color: #121212;
   min-height: 100vh;
@@ -23,7 +25,7 @@
 .widget {
   background: var(--widget-background);
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
   box-shadow: 0 8px 16px var(--widget-shadow);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -31,10 +33,33 @@
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 220px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, grid-column 0.3s ease, grid-row 0.3s ease, height 0.3s ease;
+}
+
+/* Apple-style widget size classes */
+.widget.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.widget.medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+
+.widget.large {
+  grid-column: span 2;
+  grid-row: span 2;
+  height: auto;
+}
+
+.widget.x-large {
+  grid-column: span 4;
+  grid-row: span 2;
+  height: auto;
 }
 
 .widget:hover {
@@ -58,6 +83,71 @@
   position: relative;
 }
 
+/* Widget layout standardization */
+.widget-content > div {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Small widgets use vertical layout */
+.small .widget-content > div {
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.widget-content > div > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.widget-content > div > div:first-child > div:first-child {
+  position: relative;
+  width: 120px;
+  height: 110px; /* Standardized height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+/* Height adjustment for all small widgets to ensure consistency */
+.small .widget-content > div > div:first-child > div:first-child {
+  height: 100px;
+}
+
+/* Adjustments for medium widgets */
+.medium .widget-content > div > div:first-child > div:first-child {
+  width: 200px;
+}
+
+/* Adjustments for large widgets */
+.large .widget-content > div > div:first-child > div:first-child {
+  width: 280px;
+  height: 280px;
+}
+
+/* Adjustments for x-large widgets */
+.x-large .widget-content > div > div:first-child > div:first-child {
+  width: 400px;
+  height: 380px;
+}
+
+/* Small widget value display adjustments */
+.small .widget-content > div > div:nth-child(2) {
+  margin-right: 0;
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .value-text {
   font-size: 36px;
   font-weight: 700;
@@ -65,10 +155,22 @@
   letter-spacing: -0.5px;
 }
 
+.small .value-text {
+  font-size: 28px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .value-label {
   font-size: 14px;
   opacity: 0.7;
   letter-spacing: 0.2px;
+  white-space: nowrap;
+  position: relative;
+  text-align: center;
+  margin-top: 4px;
 }
 
 .value-unit {
@@ -76,4 +178,30 @@
   opacity: 0.7;
   font-weight: 500;
   margin-top: 2px;
+}
+
+.small .value-unit {
+  margin-top: 0px;
+}
+
+/* Media queries for responsive layout */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .widget.medium, .widget.large, .widget.x-large {
+    grid-column: span 1;
+    grid-row: span 1;
+    height: 220px;
+  }
+  
+  .medium .widget-content > div > div:first-child > div:first-child,
+  .large .widget-content > div > div:first-child > div:first-child,
+  .x-large .widget-content > div > div:first-child > div:first-child {
+    width: 120px;
+    height: 110px;
+  }
 } 

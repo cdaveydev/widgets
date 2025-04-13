@@ -41,76 +41,80 @@ const GarbageWidget = ({ initialLevel = 60 }: GarbageWidgetProps) => {
   };
 
   return (
-    <div className="widget">
+    <>
       <div className="widget-title">Garbage Level</div>
       <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ 
-              position: 'relative', 
-              width: '80px',
-              height: '100px'
-            }}>
-              {/* Trash can body */}
-              <div style={{
-                position: 'absolute',
+        <div>
+          <div>
+            <div>
+              <div style={{ 
+                position: 'relative', 
                 width: '80px',
                 height: '100px',
-                borderRadius: '5px 5px 15px 15px',
-                border: '3px solid white',
-                overflow: 'hidden',
-                boxSizing: 'border-box',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                display: 'flex',
+                justifyContent: 'center'
               }}>
-                {/* Trash can fill */}
+                {/* Trash can body */}
+                <div style={{
+                  position: 'relative',
+                  width: '80px',
+                  height: '100px',
+                  borderRadius: '5px 5px 15px 15px',
+                  border: '3px solid white',
+                  overflow: 'hidden',
+                  boxSizing: 'border-box',
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                }}>
+                  {/* Trash can fill */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    height: `${fillLevel}%`,
+                    backgroundColor: getColor(),
+                    transition: 'height 1s ease, background-color 1s ease'
+                  }} />
+                  
+                  {/* Trash can "ridges" */}
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '25%', 
+                    width: '100%', 
+                    height: '2px', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.3)' 
+                  }} />
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '50%', 
+                    width: '100%', 
+                    height: '2px', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.3)' 
+                  }} />
+                  <div style={{ 
+                    position: 'absolute', 
+                    top: '75%', 
+                    width: '100%', 
+                    height: '2px', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.3)' 
+                  }} />
+                </div>
+                
+                {/* Trash can lid */}
                 <div style={{
                   position: 'absolute',
-                  bottom: 0,
-                  width: '100%',
-                  height: `${fillLevel}%`,
-                  backgroundColor: getColor(),
-                  transition: 'height 1s ease, background-color 1s ease'
-                }} />
-                
-                {/* Trash can "ridges" */}
-                <div style={{ 
-                  position: 'absolute', 
-                  top: '25%', 
-                  width: '100%', 
-                  height: '2px', 
-                  backgroundColor: 'rgba(255, 255, 255, 0.3)' 
-                }} />
-                <div style={{ 
-                  position: 'absolute', 
-                  top: '50%', 
-                  width: '100%', 
-                  height: '2px', 
-                  backgroundColor: 'rgba(255, 255, 255, 0.3)' 
-                }} />
-                <div style={{ 
-                  position: 'absolute', 
-                  top: '75%', 
-                  width: '100%', 
-                  height: '2px', 
-                  backgroundColor: 'rgba(255, 255, 255, 0.3)' 
+                  top: '-10px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '90px',
+                  height: '12px',
+                  borderRadius: '5px',
+                  border: '3px solid white',
+                  boxSizing: 'border-box',
+                  backgroundColor: 'rgba(255, 255, 255, 0.2)'
                 }} />
               </div>
-              
-              {/* Trash can lid */}
-              <div style={{
-                position: 'absolute',
-                top: '-10px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '90px',
-                height: '12px',
-                borderRadius: '5px',
-                border: '3px solid white',
-                boxSizing: 'border-box',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)'
-              }} />
             </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
+            <div className="value-label">
               {getStatusLabel()}
             </div>
           </div>
@@ -119,10 +123,11 @@ const GarbageWidget = ({ initialLevel = 60 }: GarbageWidgetProps) => {
             <div className="value-text">
               {Math.round(fillLevel)}%
             </div>
+            <div className="value-unit">full</div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

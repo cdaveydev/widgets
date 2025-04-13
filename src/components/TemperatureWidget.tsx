@@ -50,33 +50,20 @@ const TemperatureWidget = ({ initialTemp = 22, unit = 'F' }: TemperatureWidgetPr
   };
 
   return (
-    <div className="widget">
-      <div className="widget-title">Temperature</div>
-      <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-              {/* Thermometer bulb */}
-              <div style={{ 
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                backgroundColor: getTemperatureColor(),
-                marginBottom: '-5px',
-                zIndex: 2,
-                border: '2px solid white'
-              }} />
-              
+    <div className="widget-content">
+      <div>
+        <div>
+          <div style={{ position: 'relative', width: '120px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center' }}>
               {/* Thermometer stem */}
               <div style={{
                 position: 'relative',
                 width: '14px',
-                height: '120px',
-                borderRadius: '7px 7px 0 0',
+                height: '100px',
+                borderRadius: '0 0 7px 7px',
                 overflow: 'hidden',
                 border: '2px solid white',
-                borderBottom: 'none',
-                marginLeft: '-13px',
+                borderTop: 'none',
                 backgroundColor: 'rgba(255, 255, 255, 0.1)'
               }}>
                 <div style={{
@@ -95,16 +82,30 @@ const TemperatureWidget = ({ initialTemp = 22, unit = 'F' }: TemperatureWidgetPr
                 <div style={{ position: 'absolute', top: '70%', right: '2px', width: '4px', height: '1px', backgroundColor: 'white' }} />
                 <div style={{ position: 'absolute', top: '90%', right: '2px', width: '4px', height: '1px', backgroundColor: 'white' }} />
               </div>
-            </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
-              {getTemperatureStatus()}
+
+              {/* Thermometer bulb */}
+              <div style={{
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                backgroundColor: getTemperatureColor(),
+                position: 'absolute',
+                bottom: '-5px',
+                left: '-5px',
+                zIndex: 2,
+                border: '2px solid white',
+                transition: 'background-color 1s ease'
+              }} />
             </div>
           </div>
-          
-          <div style={{ textAlign: 'center', marginRight: '20px' }}>
-            <div className="value-text">
-              {displayTemp.toFixed(1)}°{unit}
-            </div>
+          <div className="value-label">
+            {getTemperatureStatus()}
+          </div>
+        </div>
+        
+        <div style={{ textAlign: 'center', marginRight: '20px' }}>
+          <div className="value-text">
+            {displayTemp.toFixed(1)}°{unit}
           </div>
         </div>
       </div>

@@ -54,13 +54,13 @@ const OxygenLevelWidget = ({ initialLevel = 98 }: OxygenLevelWidgetProps) => {
   const fillPercentage = Math.min(100, Math.max(0, (oxygenLevel - 90) * 10));
 
   return (
-    <div className="widget">
+    <>
       <div className="widget-title">Oxygen Level</div>
       <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ position: 'relative', width: '120px', height: '120px' }}>
-              <svg width="120" height="120" viewBox="0 0 120 120">
+        <div>
+          <div>
+            <div>
+              <svg width="110" height="110" viewBox="0 0 120 120">
                 {/* Oxygen level gauge background */}
                 <circle
                   cx="60"
@@ -143,7 +143,7 @@ const OxygenLevelWidget = ({ initialLevel = 98 }: OxygenLevelWidgetProps) => {
                 </g>
               </svg>
             </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
+            <div className="value-label">
               {getOxygenStatus()}
             </div>
           </div>
@@ -156,7 +156,7 @@ const OxygenLevelWidget = ({ initialLevel = 98 }: OxygenLevelWidgetProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -38,15 +38,14 @@ const BatteryWidget = ({ initialLevel = 75 }: BatteryWidgetProps) => {
   };
 
   return (
-    <div className="widget">
-      <div className="widget-title">Battery</div>
-      <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div className="widget-content">
+      <div>
+        <div>
+          <div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ 
                 width: '60px', 
-                height: '120px', 
+                height: '80px', 
                 border: '3px solid white', 
                 borderRadius: '12px', 
                 position: 'relative',
@@ -82,15 +81,15 @@ const BatteryWidget = ({ initialLevel = 75 }: BatteryWidgetProps) => {
                 borderRadius: '0 3px 3px 0'
               }} />
             </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
-              {charging ? 'Charging' : 'On Battery'}
-            </div>
           </div>
-          
-          <div style={{ textAlign: 'center', marginRight: '20px' }}>
-            <div className="value-text">
-              {batteryLevel}%
-            </div>
+          <div className="value-label">
+            {charging ? 'Charging' : 'On Battery'}
+          </div>
+        </div>
+        
+        <div style={{ textAlign: 'center', marginRight: '20px' }}>
+          <div className="value-text">
+            {batteryLevel}%
           </div>
         </div>
       </div>

@@ -1,145 +1,151 @@
 import { useState, useEffect } from 'react';
 
 interface SpeedWidgetProps {
-  initialSpeed?: number;
-  maxSpeed?: number;
-  unit?: string;
+  initialSpeed?: number; // km/h
 }
 
-const SpeedWidget = ({ 
-  initialSpeed = 45, 
-  maxSpeed = 120, 
-  unit = 'mph' 
-}: SpeedWidgetProps) => {
+const SpeedWidget = ({ initialSpeed = 0 }: SpeedWidgetProps) => {
   const [speed, setSpeed] = useState(initialSpeed);
+  const [maxSpeed, setMaxSpeed] = useState(initialSpeed);
 
   // Simulate speed changes
   useEffect(() => {
     const interval = setInterval(() => {
       setSpeed(prevSpeed => {
-        // Random speed change with some momentum
-        const direction = Math.random() > 0.5 ? 1 : -1;
-        const magnitude = Math.random() * 8;
-        // Ensure speed stays within bounds
-        return Math.max(0, Math.min(maxSpeed, prevSpeed + (direction * magnitude)));
+        // Fluctuate speed to simulate real-world driving patterns
+        let targetSpeed;
+        
+        // Randomly choose whether to accelerate, maintain, or slow down
+        const behavior = Math.random();
+        if (behavior < 0.3) {
+          // Accelerate
+          targetSpeed = prevSpeed + (Math.random() * 15);
+        } else if (behavior < 0.6) {
+          // Maintain approximate speed with minor fluctuations
+          targetSpeed = prevSpeed + (Math.random() * 6 - 3);
+        } else {
+          // Slow down
+          targetSpeed = prevSpeed - (Math.random() * 10);
+        }
+        
+        // Ensure speed stays between 0 and 130
+        const newSpeed = Math.max(0, Math.min(130, targetSpeed));
+        
+        // Update max speed if needed
+        if (newSpeed > maxSpeed) {
+          setMaxSpeed(newSpeed);
+        }
+        
+        return newSpeed;
       });
-    }, 4000);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [maxSpeed]);
 
-  // Convert speed to an angle for the needle (0 speed = 180 degrees, max speed = 0 degrees)
-  const speedAngle = 180 - (speed / maxSpeed * 180);
+  // Calculate needle rotation (0 km/h = -120deg, 130 km/h = 120deg)
+  const needleRotation = -120 + (speed / 130) * 240;
   
-  // Determine speed color based on percentage of max
+  // Get speed color based on value
   const getSpeedColor = () => {
-    const speedPercentage = speed / maxSpeed;
-    if (speedPercentage > 0.85) return 'var(--accent-red)';
-    if (speedPercentage > 0.6) return 'var(--accent-orange)';
-    if (speedPercentage > 0.3) return 'var(--accent-yellow)';
+    if (speed > 100) return 'var(--accent-red)';
+    if (speed > 70) return 'var(--accent-orange)';
+    if (speed > 30) return 'var(--accent-yellow)';
     return 'var(--accent-green)';
+  };
+  
+  // Get status label
+  const getSpeedLabel = () => {
+    if (speed > 100) return 'Over speed limit';
+    if (speed > 70) return 'Highway speed';
+    if (speed > 30) return 'Urban driving';
+    if (speed > 5) return 'Slow driving';
+    return 'Stopped';
   };
 
   return (
-    <div className="widget">
+    <>
       <div className="widget-title">Speed</div>
       <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ 
-              position: 'relative', 
-              width: '140px', 
-              height: '80px',
-              overflow: 'hidden'
-            }}>
-              {/* Speedometer background */}
-              <div style={{
-                position: 'absolute',
-                width: '140px',
-                height: '140px',
-                borderRadius: '50%',
-                border: '3px solid white',
-                boxSizing: 'border-box',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                top: '0px'
-              }} />
-              
-              {/* Speed markers */}
-              <svg width="140" height="80" viewBox="0 0 140 80" style={{ position: 'absolute', top: 0 }}>
-                {/* Background arc */}
+        <div>
+          <div>
+            <div style={{ position: 'relative', height: '110px', display: 'flex', justifyContent: 'center' }}>
+              <svg width="200" height="110" viewBox="0 0 200 120">
+                {/* Speed gauge background */}
                 <path
-                  d="M10,70 A60,60 0 0,1 130,70"
+                  d="M 20,100 A 80,80 0 0,1 180,100"
                   fill="none"
                   stroke="rgba(255, 255, 255, 0.2)"
                   strokeWidth="6"
                 />
                 
-                {/* Colored speed arc */}
-                <path
-                  d="M10,70 A60,60 0 0,1 130,70"
-                  fill="none"
+                {/* Speed markings */}
+                {[...Array(7)].map((_, i) => {
+                  const angle = -120 + i * 40;
+                  const x1 = 100 + 75 * Math.cos(angle * Math.PI / 180);
+                  const y1 = 100 + 75 * Math.sin(angle * Math.PI / 180);
+                  const x2 = 100 + 85 * Math.cos(angle * Math.PI / 180);
+                  const y2 = 100 + 85 * Math.sin(angle * Math.PI / 180);
+                  return (
+                    <line
+                      key={i}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke="white"
+                      strokeWidth="2"
+                    />
+                  );
+                })}
+                
+                {/* Speed labels */}
+                <text x="25" y="105" fill="white" fontSize="12" textAnchor="middle">0</text>
+                <text x="48" y="75" fill="white" fontSize="12" textAnchor="middle">20</text>
+                <text x="80" y="52" fill="white" fontSize="12" textAnchor="middle">50</text>
+                <text x="100" y="45" fill="white" fontSize="12" textAnchor="middle">70</text>
+                <text x="120" y="52" fill="white" fontSize="12" textAnchor="middle">90</text>
+                <text x="155" y="75" fill="white" fontSize="12" textAnchor="middle">110</text>
+                <text x="175" y="105" fill="white" fontSize="12" textAnchor="middle">130</text>
+                
+                {/* Needle */}
+                <line
+                  x1="100"
+                  y1="100"
+                  x2="100"
+                  y2="30"
                   stroke={getSpeedColor()}
-                  strokeWidth="6"
-                  strokeDasharray="188.5"
-                  strokeDashoffset={188.5 * (1 - speed / maxSpeed)}
-                  style={{ transition: 'stroke-dashoffset 1s ease, stroke 1s ease' }}
+                  strokeWidth="3"
+                  transform={`rotate(${needleRotation}, 100, 100)`}
+                  style={{ transition: 'transform 0.5s ease, stroke 0.5s ease' }}
                 />
                 
-                {/* Tick marks */}
-                <g stroke="white" strokeWidth="1">
-                  <line x1="20" y1="63" x2="20" y2="68" />
-                  <line x1="44" y1="45" x2="46" y2="49" />
-                  <line x1="70" y1="38" x2="70" y2="43" />
-                  <line x1="96" y1="45" x2="94" y2="49" />
-                  <line x1="120" y1="63" x2="120" y2="68" />
-                </g>
+                {/* Needle center */}
+                <circle cx="100" cy="100" r="8" fill={getSpeedColor()} style={{ transition: 'fill 0.5s ease' }} />
                 
-                {/* Speed numbers */}
-                <text x="15" y="58" fill="white" fontSize="8" textAnchor="middle">0</text>
-                <text x="42" y="39" fill="white" fontSize="8" textAnchor="middle">{maxSpeed * 0.25}</text>
-                <text x="70" y="32" fill="white" fontSize="8" textAnchor="middle">{maxSpeed * 0.5}</text>
-                <text x="98" y="39" fill="white" fontSize="8" textAnchor="middle">{maxSpeed * 0.75}</text>
-                <text x="125" y="58" fill="white" fontSize="8" textAnchor="middle">{maxSpeed}</text>
+                {/* Current speed */}
+                <text x="100" y="85" fill="white" fontSize="24" fontWeight="bold" textAnchor="middle">
+                  {Math.round(speed)}
+                </text>
               </svg>
-              
-              {/* Needle */}
-              <div style={{
-                position: 'absolute',
-                bottom: '10px',
-                left: '70px',
-                width: '4px',
-                height: '50px',
-                backgroundColor: 'white',
-                transformOrigin: 'bottom center',
-                transform: `rotate(${speedAngle}deg)`,
-                borderRadius: '4px 4px 0 0',
-                transition: 'transform 0.5s ease-out'
-              }} />
-              
-              {/* Center cap */}
-              <div style={{
-                position: 'absolute',
-                bottom: '6px',
-                left: '66px',
-                width: '12px',
-                height: '12px',
-                backgroundColor: 'white',
-                borderRadius: '50%'
-              }} />
             </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
-              {unit}
+            <div className="value-label">
+              {getSpeedLabel()}
             </div>
           </div>
           
-          <div style={{ textAlign: 'center', marginRight: '20px' }}>
-            <div className="value-text">
-              {Math.round(speed)}
+          <div style={{ textAlign: 'center', marginRight: '20px', display: 'flex', flexDirection: 'column' }}>
+            <div style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+              Max
             </div>
+            <div className="value-text">
+              {Math.round(maxSpeed)}
+            </div>
+            <div className="value-unit">km/h</div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

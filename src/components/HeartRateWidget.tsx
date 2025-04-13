@@ -52,14 +52,14 @@ const HeartRateWidget = ({ initialRate = 72 }: HeartRateWidgetProps) => {
   };
 
   return (
-    <div className="widget">
+    <>
       <div className="widget-title">Heart Rate</div>
       <div className="widget-content">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ position: 'relative', width: '120px', height: '120px' }}>
+        <div>
+          <div>
+            <div>
               {/* Heart rate visualization */}
-              <svg width="120" height="120" viewBox="0 0 120 120">
+              <svg width="110" height="110" viewBox="0 0 120 120">
                 {/* Background circle */}
                 <circle
                   cx="60"
@@ -104,7 +104,7 @@ const HeartRateWidget = ({ initialRate = 72 }: HeartRateWidgetProps) => {
                 />
               </svg>
             </div>
-            <div className="value-label" style={{ marginTop: '8px' }}>
+            <div className="value-label">
               {getHeartRateStatus()}
             </div>
           </div>
@@ -117,7 +117,7 @@ const HeartRateWidget = ({ initialRate = 72 }: HeartRateWidgetProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
